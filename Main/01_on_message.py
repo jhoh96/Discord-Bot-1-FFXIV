@@ -12,6 +12,7 @@ async def on_ready(): # triggered when bot comes online
     print('Bot is now online, listening for commands')
 
 
+#basic event handling for practice
 @client.event
 async def on_message(message): # param - message
     if message.author == client.user:
