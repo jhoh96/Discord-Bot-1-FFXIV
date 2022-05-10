@@ -1,7 +1,9 @@
 import discord
 import os
-import xiv_commands
+import asyncio
+
 from dotenv import load_dotenv
+
 
 
 
@@ -24,10 +26,6 @@ async def on_message(message): # param - message
 
     if message.content == 'hello':
         await message.channel.send('Hi there')
-
-    if message.content == 'Search My Character':
-        results = xiv_commands.fetch_example_results()
-        await message.channel.send(results)
 
 
 

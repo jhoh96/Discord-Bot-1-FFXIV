@@ -1,6 +1,7 @@
 # [Python] Presonal Project #1 - Discord Bot (Final Fantasy XIV)
 (Python) Presonal project using XIVAPI - for MMORPG Final Fantasy XIV.
 
+
 Link to XIVAPI Documentation [here](https://xivapi.com/)
 
 Link to server invitation [here]('tobeaddedlater')

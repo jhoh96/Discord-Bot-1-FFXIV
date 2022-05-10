@@ -1,0 +1,102 @@
+import discord
+import pyxivapi
+import urllib3, json
+from PIL import Image, ImageDraw
+from discord.ext import commands
+import os, os.path
+from dotenv import load_dotenv
+
+load_dotenv()
+DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
+URIANGER = Image.open("Main\\img\\urianger.png")
+http = urllib3.PoolManager()
+
+bot = commands.Bot(command_prefix='$')
+bot.remove_command('help')
+
+
+@bot.command()
+async def help(ctx):
+    embed = discord.Embed(
+        title='Bot Commands',
+        description='Welcome to the help section. The list of commands are as follows: ',
+        color=discord.Colour.red()
+
+    )
+
+    embed.set_image(url='https://pbs.twimg.com/media/EGj-xCHXYAETwnw?format=png&name=900x900')
+    embed.add_field(
+        name='$help',
+        value='List all available commands',
+        inline=False
+    )
+
+    embed.add_field(
+        name='$commend',
+        value='Commends another player',
+        inline=False
+    )
+
+    embed.add_field(
+        name='$summon',
+        value='Summons the boys',
+        inline=False
+    )
+
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def info(ctx):
+    """
+    param: ctx - context (command execution information)
+
+    $info
+    """
+    await ctx.send(ctx.guild)
+    await ctx.send(ctx.author)
+    await ctx.send(ctx.message.id)
+    
+
+@bot.command()
+async def commend(ctx, arg):
+    """
+    commend/send commendation to targeted user
+    param: context, arg=target user
+    $commend
+    """
+    
+    await ctx.send(f'commended {arg}')
+
+
+
+"""
+@bot.command()
+async def multiple_args(ctx, arg1, arg2):
+    await ctx.send(f'received multiple args : {arg1} and {arg2}')
+"""
+
+@bot.command()
+async def summon(ctx, *args):
+    """
+    *args -> multiple/unknown # of parameters
+    multiple arguments in command
+    """
+
+    """
+    to add -> invite favourite users to summoning pool using discord user ID
+    summon everyone in summong pool
+    """
+ 
+    total_summoned = ', '.join(args) #change to summon pool later
+    await ctx.send(f'Summoned {total_summoned}') 
+
+
+@bot.command()
+async def search(ctx, ID):
+    request = http.request('GET','https://xivapi.com/character/'+ID,fields={'Character':'Portrait'})
+    portrait = json.loads(request.data.decode('utf-8'))['Character']['Portrait']
+    await ctx.send(f'Finished Searching {portrait}')
+
+
+
+bot.run(DISCORD_TOKEN)
